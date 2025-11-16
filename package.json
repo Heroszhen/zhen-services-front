@@ -1,6 +1,7 @@
 {
   "name": "zhen-services",
   "version": "0.0.0",
+  "nodejs": "20.12.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
