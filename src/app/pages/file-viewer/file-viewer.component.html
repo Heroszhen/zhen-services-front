@@ -1,0 +1,27 @@
+<section id="file-viewer" class="w-full h-full">
+    <div>{{filename}}</div>
+    @if (url !== null) {
+        @if (extension === FileExtensionEnum.PDF) {
+            <ngx-doc-viewer
+                [url]="url"
+                viewer="pdf"
+                class="w-full h-full"
+            >
+            </ngx-doc-viewer>
+        }
+
+        @if (extension === FileExtensionEnum.MP3) {
+            <section class="file-wrap">
+                <audio controls src={{url}} class="w-full"></audio>
+            </section>
+        }
+
+        @if (extension === FileExtensionEnum.MP4) {
+            <section class="file-wrap video">
+                <video className="bg-dark" controls>
+                    <source src={{url}} type="video/mp4" />
+                </video>
+            </section>
+        }
+    }
+</section>
