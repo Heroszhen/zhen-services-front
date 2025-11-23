@@ -43,3 +43,4 @@ Thumbs.db
 
 
 /src/app/style/*
+src/environments/environment.development.ts
