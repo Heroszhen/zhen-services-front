@@ -10,6 +10,10 @@ iframe {
     justify-content: center;
     align-items: center;
     background-color: black;
+    &.image {
+        display: block;
+    }
+
     video {
         width: 100%;
         aspect-ratio: 16/9;

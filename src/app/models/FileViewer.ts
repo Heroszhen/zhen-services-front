@@ -10,5 +10,6 @@ export interface MessageEventRequest {
 export enum FileExtensionEnum {
   PDF = 'pdf',
   MP4 = 'mp4',
-  MP3 = 'mp3'
+  MP3 = 'mp3',
+  IMAGE = 'image'
 }

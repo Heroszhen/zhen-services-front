@@ -18,9 +18,15 @@
 
         @if (extension === FileExtensionEnum.MP4) {
             <section class="file-wrap video">
-                <video className="bg-dark" controls>
+                <video class="bg-dark" controls>
                     <source src={{url}} type="video/mp4" />
                 </video>
+            </section>
+        }
+
+        @if (extension === FileExtensionEnum.IMAGE) {
+            <section class="file-wrap image">
+                <img src={{url}} class="w-full h-auto" alt="" />
             </section>
         }
     }
