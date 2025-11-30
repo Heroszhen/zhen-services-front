@@ -3,11 +3,12 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { MessageEventRequest, FileExtensionEnum } from '../../models/FileViewer';
 import { environment } from '../../../environments/environment';
 import { isEmpty } from '../../services/util';
+import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 
 @Component({
   selector: 'app-file-viewer',
   standalone: true,
-  imports: [NgxDocViewerModule],
+  imports: [NgxDocViewerModule, PdfJsViewerModule],
   templateUrl: './file-viewer.component.html',
   styleUrl: './file-viewer.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -15,7 +16,6 @@ import { isEmpty } from '../../services/util';
 export class FileViewerComponent implements OnInit {
   filename?:string;
   url: string|null = null;
-  readonly viewerUrlPrefix: string = "https://docs.google.com/gview?url="
   viewerUrl: string|null = null;
   extension: string|null = null;
   FileExtensionEnum = FileExtensionEnum;
@@ -36,10 +36,20 @@ export class FileViewerComponent implements OnInit {
     }
 
     this.extension = request.payload.extension;
-    this.url = request.payload.url;
+    if (this.extension === FileExtensionEnum.PDF) {
+      this.fetchPDF(request.payload.url);
+    } else {
+      this.url = request.payload.url;
+    }
   }
 
   handleDocLoaded() {
     this.loading = false;
+  }
+
+  fetchPDF(url: string) {
+    fetch(url)
+    .then(response => response.blob())
+    .then(blob => this.url = URL.createObjectURL(blob))
   }
 }

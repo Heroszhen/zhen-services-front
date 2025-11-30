@@ -1,21 +1,14 @@
 <section id="file-viewer" class="w-full h-full">
     <div>{{filename}}</div>
     @if (url !== null && extension !== null) {
-        @if (extension === FileExtensionEnum.PDF ||
-            extension.toLowerCase().includes('doc')
-        ) {
-            @if (loading === true) {
-                <section class="file-wrap">
-                    <img src="assets/drive_loader.gif" alt="" class="w-[100px] h-auto" />
-                </section>
-            } 
-            <ngx-doc-viewer
-                [url]="url"
-                viewer="office"
-                (loaded)="handleDocLoaded()"
+        @if (extension === FileExtensionEnum.PDF) {
+            <ng2-pdfjs-viewer
+                pdfSrc={{url}}
+                [showSpinner]="true"
+                [theme]="'light'"
                 class="w-full h-full"
             >
-            </ngx-doc-viewer>
+            </ng2-pdfjs-viewer>
         }
 
         @if (extension.toLowerCase().includes('doc')) {
