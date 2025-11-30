@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		html, body {
+			padding: 0;
+			margin: 0;
+		}
+		body {
+			padding-left: 10px;
+		}
+		main {
+			display: flex;
+			width: 95%;
+		}
+		main > div:first-child {
+			width: 600px;
+		}
+		main > div:last-child {
+			width: calc(100% - 600px);
+		}
+		form {
+			width:100%;
+		}
+		textarea, input {
+			width:100%;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<div>
+			<iframe src="http://localhost:4200/file-view" style="width:100%;height:100vh;border: none;"></iframe>
+		</div>
+		<div>
+			<form>
+				<textarea rows="4" name="url" placeholder="url"></textarea><br>
+				<input name="extension" placeholder="extension"><br><br>
+				<button type="submit">Envoyer</button>
+			</form>
+		</div>
+	</main>
+	
+
+	<script>
+		const form = document.querySelector('form');
+		const iframe = document.querySelector('iframe');
+
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const elements = form.elements;
+			loadIframe(elements['url'].value, elements['extension'].value);
+		});
+
+		function loadIframe(url, extension) {
+			iframe.contentWindow.postMessage(
+				{ type: 'READY', payload: { url: url, extension: extension } },
+				'http://localhost:4200' // origine de l’appli Angular dans l’iframe
+			);
+		}
+	</script>
+</body>
+
+</html>
