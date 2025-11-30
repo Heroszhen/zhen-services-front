@@ -11,7 +11,22 @@
             } 
             <ngx-doc-viewer
                 [url]="url"
-                viewer="google"
+                viewer="office"
+                (loaded)="handleDocLoaded()"
+                class="w-full h-full"
+            >
+            </ngx-doc-viewer>
+        }
+
+        @if (extension.toLowerCase().includes('doc')) {
+            @if (loading === true) {
+                <section class="file-wrap">
+                    <img src="assets/drive_loader.gif" alt="" class="w-[100px] h-auto" />
+                </section>
+            } 
+            <ngx-doc-viewer
+                [url]="url"
+                viewer="office"
                 (loaded)="handleDocLoaded()"
                 class="w-full h-full"
             >
