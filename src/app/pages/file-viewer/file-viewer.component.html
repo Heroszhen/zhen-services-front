@@ -1,10 +1,18 @@
 <section id="file-viewer" class="w-full h-full">
     <div>{{filename}}</div>
-    @if (url !== null) {
-        @if (extension === FileExtensionEnum.PDF) {
+    @if (url !== null && extension !== null) {
+        @if (extension === FileExtensionEnum.PDF ||
+            extension.toLowerCase().includes('doc')
+        ) {
+            @if (loading === true) {
+                <section class="file-wrap">
+                    <img src="assets/drive_loader.gif" alt="" class="w-[100px] h-auto" />
+                </section>
+            } 
             <ngx-doc-viewer
                 [url]="url"
-                viewer="pdf"
+                viewer="google"
+                (loaded)="handleDocLoaded()"
                 class="w-full h-full"
             >
             </ngx-doc-viewer>

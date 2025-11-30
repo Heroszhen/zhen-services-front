@@ -19,6 +19,7 @@ export class FileViewerComponent implements OnInit {
   viewerUrl: string|null = null;
   extension: string|null = null;
   FileExtensionEnum = FileExtensionEnum;
+  loading:boolean = true;
 
   ngOnInit(): void {
     console.log("Merci d'utiliser Zhen Service");
@@ -35,10 +36,10 @@ export class FileViewerComponent implements OnInit {
     }
 
     this.extension = request.payload.extension;
-    if (this.extension === FileExtensionEnum.PDF) {
-      this.url = this.viewerUrlPrefix + encodeURIComponent(request.payload.url) + '&embedded=true';
-    } else {
-      this.url = request.payload.url;
-    }
+    this.url = request.payload.url;
+  }
+
+  handleDocLoaded() {
+    this.loading = false;
   }
 }
