@@ -39,5 +39,13 @@
                 <img src={{url}} class="w-full h-auto" alt="" />
             </section>
         }
+
+        @if (extension === FileExtensionEnum.TXT ||
+            extension === FileExtensionEnum.CSV
+        ) {
+            <section class="file-wrap txt">
+                <iframe [src]="url | safe:'resourceUrl'" class="border-none"></iframe>
+            </section>
+        }
     }
 </section>

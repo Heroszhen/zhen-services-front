@@ -4,11 +4,12 @@ import { MessageEventRequest, FileExtensionEnum } from '../../models/FileViewer'
 import { environment } from '../../../environments/environment';
 import { isEmpty } from '../../services/util';
 import { PdfViewerComponent } from '../../components/pdf-viewer/pdf-viewer.component';
+import { SafePipe } from '../../pipes/safe.pipe';
 
 @Component({
   selector: 'app-file-viewer',
   standalone: true,
-  imports: [NgxDocViewerModule, PdfViewerComponent],
+  imports: [NgxDocViewerModule, PdfViewerComponent, SafePipe],
   templateUrl: './file-viewer.component.html',
   styleUrl: './file-viewer.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -13,6 +13,9 @@ iframe {
     &.image {
         display: block;
     }
+    &.txt {
+        background-color: white;
+    }
 
     video {
         width: 100%;

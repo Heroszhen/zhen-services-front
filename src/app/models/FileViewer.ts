@@ -11,5 +11,7 @@ export enum FileExtensionEnum {
   PDF = 'pdf',
   MP4 = 'mp4',
   MP3 = 'mp3',
-  IMAGE = 'image'
+  IMAGE = 'image',
+  TXT = 'txt',
+  CSV = 'csv'
 }
