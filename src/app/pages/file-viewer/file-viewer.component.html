@@ -2,13 +2,7 @@
     <div>{{filename}}</div>
     @if (url !== null && extension !== null) {
         @if (extension === FileExtensionEnum.PDF) {
-            <ng2-pdfjs-viewer
-                pdfSrc={{url}}
-                [showSpinner]="true"
-                [theme]="'light'"
-                class="w-full h-full"
-            >
-            </ng2-pdfjs-viewer>
+            <app-pdf-viewer [fileUrl]='url'></app-pdf-viewer>
         }
 
         @if (extension.toLowerCase().includes('doc')) {

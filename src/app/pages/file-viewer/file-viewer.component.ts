@@ -3,12 +3,12 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { MessageEventRequest, FileExtensionEnum } from '../../models/FileViewer';
 import { environment } from '../../../environments/environment';
 import { isEmpty } from '../../services/util';
-import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
+import { PdfViewerComponent } from '../../components/pdf-viewer/pdf-viewer.component';
 
 @Component({
   selector: 'app-file-viewer',
   standalone: true,
-  imports: [NgxDocViewerModule, PdfJsViewerModule],
+  imports: [NgxDocViewerModule, PdfViewerComponent],
   templateUrl: './file-viewer.component.html',
   styleUrl: './file-viewer.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -36,11 +36,7 @@ export class FileViewerComponent implements OnInit {
     }
 
     this.extension = request.payload.extension;
-    if (this.extension === FileExtensionEnum.PDF) {
-      this.fetchPDF(request.payload.url);
-    } else {
-      this.url = request.payload.url;
-    }
+    this.url = request.payload.url;
   }
 
   handleDocLoaded() {
