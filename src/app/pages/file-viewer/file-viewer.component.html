@@ -2,7 +2,13 @@
     <div>{{filename}}</div>
     @if (url !== null && extension !== null) {
         @if (extension === FileExtensionEnum.PDF) {
-            <app-pdf-viewer [fileUrl]='url'></app-pdf-viewer>
+            @if (isOnMobile === true ) {
+                <app-pdf-viewer [fileUrl]='url'></app-pdf-viewer>
+            } @else {
+                <section class="file-wrap">
+                    <iframe [src]="url | safe:'resourceUrl'"></iframe>
+                </section>
+            }
         }
 
         @if (extension.toLowerCase().includes('doc')) {

@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angula
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { MessageEventRequest, FileExtensionEnum } from '../../models/FileViewer';
 import { environment } from '../../../environments/environment';
-import { isEmpty } from '../../services/util';
+import { isEmpty, isMobile } from '../../services/util';
 import { PdfViewerComponent } from '../../components/pdf-viewer/pdf-viewer.component';
 import { SafePipe } from '../../pipes/safe.pipe';
 
@@ -21,6 +21,7 @@ export class FileViewerComponent implements OnInit {
   extension: string|null = null;
   FileExtensionEnum = FileExtensionEnum;
   loading:boolean = true;
+  isOnMobile: boolean = isMobile();
 
   ngOnInit(): void {
     console.log("Merci d'utiliser Zhen Service");
@@ -44,6 +45,9 @@ export class FileViewerComponent implements OnInit {
     this.loading = false;
   }
 
+  /**
+   * @description
+   */
   fetchPDF(url: string) {
     fetch(url)
     .then(response => response.blob())

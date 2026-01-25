@@ -5,3 +5,11 @@ export function isEmpty<T>(value:T): boolean {
 
     return false;
 }
+
+export function isMobile(): boolean {
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        return true;
+    }
+
+    return false;
+}
