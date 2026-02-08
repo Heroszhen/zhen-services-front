@@ -37,7 +37,7 @@ export class FileViewerComponent implements OnInit {
       return;
     }
 
-    this.extension = request.payload.extension;
+    this.extension = request.payload.extension.toLowerCase();
     this.url = request.payload.url;
   }
 

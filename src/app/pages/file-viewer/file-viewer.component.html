@@ -11,7 +11,7 @@
             }
         }
 
-        @if (extension.toLowerCase().includes('doc')) {
+        @if (extension.includes('doc')) {
             @if (loading === true) {
                 <section class="file-wrap">
                     <img src="assets/drive_loader.gif" alt="" class="w-[100px] h-auto" />
