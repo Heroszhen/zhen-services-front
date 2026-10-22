@@ -1,0 +1,43 @@
+:host ::ng-deep #wrap-integration iframe,
+:host ::ng-deep #wrap-integration video,
+video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    display: block;
+}
+
+#wrap-youtube-short {
+    text-align: center;
+    iframe {
+        width: 455px;
+        max-width: 95%;
+        aspect-ratio: 455 / 809;
+    }
+}
+
+:host ::ng-deep #wrap-instagram {
+    background-color: black;
+    height: 673px;
+    overflow: hidden;
+    
+    iframe {
+        position: relative !important;
+        margin: 0 auto !important;
+        margin-top: -55px !important;
+        width: 540px !important;
+        max-width: 95% !important;
+        border: none !important;
+    }
+
+    // @media (max-width: 685px) {
+    //     height: auto;
+    //     aspect-ratio: 402 / 476 !important;
+    // }
+
+    @media (max-width: 627px) {
+        height: auto;
+        aspect-ratio: 402 / 476 !important;
+    }
+}
