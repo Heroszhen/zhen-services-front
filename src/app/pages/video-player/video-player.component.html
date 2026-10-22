@@ -1,45 +1,47 @@
 <section>
-  @switch (videoType) {
-    @case (VideoTypeEnum.INTEGRATION) {
-      <div id="wrap-integration" [innerHTML]="videoUrl | safe: 'html'"></div>
-    }
+  @if (videoUrl !== null) {
+    @switch (videoType) {
+      @case (VideoTypeEnum.INTEGRATION) {
+        <div id="wrap-integration" [innerHTML]="videoUrl | safe: 'html'"></div>
+      }
 
-    @case (VideoTypeEnum.MP4) {
-      <video controls [src]="videoUrl"></video>
-    }
+      @case (VideoTypeEnum.MP4) {
+        <video controls [src]="videoUrl"></video>
+      }
 
-    @case (VideoTypeEnum.DOUYIN) {
-      <div id="wrap-douyin" class="text-center">
-        <iframe
-          [src]="videoUrl | safe: 'resourceUrl'"
-          referrerPolicy="unsafe-url"
-          allowFullScreen
-          title=""
-          id="iframe-open-douyin"
-          class="w-[325px] h-[721px]"></iframe>
-      </div>
-    }
+      @case (VideoTypeEnum.DOUYIN) {
+        <div id="wrap-douyin" class="text-center">
+          <iframe
+            [src]="videoUrl | safe: 'resourceUrl'"
+            referrerPolicy="unsafe-url"
+            allowFullScreen
+            title=""
+            id="iframe-open-douyin"
+            class="w-[325px] h-[721px]"></iframe>
+        </div>
+      }
 
-    @case (VideoTypeEnum.TIKTOK) {
-      <div id="wrap-tiktok" class="text-center">
-        <iframe
-          [src]="videoUrl | safe: 'resourceUrl'"
-          referrerPolicy="unsafe-url"
-          allowFullScreen
-          title=""
-          id="iframe-open-tiktok"
-          class="w-[499px] max-w-[95%] aspect-[499/887]"></iframe>
-      </div>
-    }
+      @case (VideoTypeEnum.TIKTOK) {
+        <div id="wrap-tiktok" class="text-center">
+          <iframe
+            [src]="videoUrl | safe: 'resourceUrl'"
+            referrerPolicy="unsafe-url"
+            allowFullScreen
+            title=""
+            id="iframe-open-tiktok"
+            class="w-[499px] max-w-[95%] aspect-[499/887]"></iframe>
+        </div>
+      }
 
-    @case (VideoTypeEnum.YOUTUBE_SHORT) {
-      <div id="wrap-youtube-short" class="text">
-        <iframe [src]="videoUrl | safe: 'resourceUrl'"></iframe>
-      </div>
-    }
+      @case (VideoTypeEnum.YOUTUBE_SHORT) {
+        <div id="wrap-youtube-short" class="text">
+          <iframe [src]="videoUrl | safe: 'resourceUrl'"></iframe>
+        </div>
+      }
 
-    @case (VideoTypeEnum.INSTAGRAM) {
-      <div id="wrap-instagram" [innerHTML]="videoUrl | safe: 'html'"></div>
+      @case (VideoTypeEnum.INSTAGRAM) {
+        <div id="wrap-instagram" [innerHTML]="videoUrl | safe: 'html'"></div>
+      }
     }
   }
 </section>
