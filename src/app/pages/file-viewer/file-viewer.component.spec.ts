@@ -8,10 +8,9 @@ describe('FileViewerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FileViewerComponent]
-    })
-    .compileComponents();
-    
+      imports: [FileViewerComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(FileViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

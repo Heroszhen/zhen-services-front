@@ -1,0 +1,15 @@
+{
+    "semi": true,
+    "printWidth": 120,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "bracketSameLine": true,
+    "bracketSpacing": true,
+    "endOfLine": "lf",
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": { "parser": "angular" }
+      }
+    ]
+}

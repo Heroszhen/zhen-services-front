@@ -1,57 +1,49 @@
 <section id="file-viewer" class="w-full h-full">
-    <div>{{filename}}</div>
-    @if (url !== null && extension !== null) {
-        @if (extension === FileExtensionEnum.PDF) {
-            @if (isOnMobile === true ) {
-                <app-pdf-viewer [fileUrl]='url'></app-pdf-viewer>
-            } @else {
-                <section class="file-wrap">
-                    <iframe [src]="url | safe:'resourceUrl'"></iframe>
-                </section>
-            }
-        }
-
-        @if (extension.includes('doc')) {
-            @if (loading === true) {
-                <section class="file-wrap">
-                    <img src="assets/drive_loader.gif" alt="" class="w-[100px] h-auto" />
-                </section>
-            } 
-            <ngx-doc-viewer
-                [url]="url"
-                viewer="office"
-                (loaded)="handleDocLoaded()"
-                class="w-full h-full"
-            >
-            </ngx-doc-viewer>
-        }
-
-        @if (extension === FileExtensionEnum.MP3) {
-            <section class="file-wrap">
-                <audio controls src={{url}} class="w-[350px]"></audio>
-            </section>
-        }
-
-        @if (extension === FileExtensionEnum.MP4) {
-            <section class="file-wrap video">
-                <video class="bg-dark" controls>
-                    <source src={{url}} type="video/mp4" />
-                </video>
-            </section>
-        }
-
-        @if (extension === FileExtensionEnum.IMAGE) {
-            <section class="file-wrap image">
-                <img src={{url}} class="w-full h-auto" alt="" />
-            </section>
-        }
-
-        @if (extension === FileExtensionEnum.TXT ||
-            extension === FileExtensionEnum.CSV
-        ) {
-            <section class="file-wrap txt">
-                <iframe [src]="url | safe:'resourceUrl'" class="border-none"></iframe>
-            </section>
-        }
+  <div>{{ filename }}</div>
+  @if (url !== null && extension !== null) {
+    @if (extension === FileExtensionEnum.PDF) {
+      @if (isOnMobile === true) {
+        <app-pdf-viewer [fileUrl]="url"></app-pdf-viewer>
+      } @else {
+        <section class="file-wrap">
+          <iframe [src]="url | safe: 'resourceUrl'"></iframe>
+        </section>
+      }
     }
+
+    @if (extension.includes("doc")) {
+      @if (loading === true) {
+        <section class="file-wrap">
+          <img src="assets/drive_loader.gif" alt="" class="w-[100px] h-auto" />
+        </section>
+      }
+      <ngx-doc-viewer [url]="url" viewer="office" (loaded)="handleDocLoaded()" class="w-full h-full"> </ngx-doc-viewer>
+    }
+
+    @if (extension === FileExtensionEnum.MP3) {
+      <section class="file-wrap">
+        <audio controls src="{{ url }}" class="w-[350px]"></audio>
+      </section>
+    }
+
+    @if (extension === FileExtensionEnum.MP4) {
+      <section class="file-wrap video">
+        <video class="bg-dark" controls>
+          <source src="{{ url }}" type="video/mp4" />
+        </video>
+      </section>
+    }
+
+    @if (extension === FileExtensionEnum.IMAGE) {
+      <section class="file-wrap image">
+        <img src="{{ url }}" class="w-full h-auto" alt="" />
+      </section>
+    }
+
+    @if (extension === FileExtensionEnum.TXT || extension === FileExtensionEnum.CSV) {
+      <section class="file-wrap txt">
+        <iframe [src]="url | safe: 'resourceUrl'" class="border-none"></iframe>
+      </section>
+    }
+  }
 </section>

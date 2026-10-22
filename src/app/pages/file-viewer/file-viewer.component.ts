@@ -12,15 +12,15 @@ import { SafePipe } from '../../pipes/safe.pipe';
   imports: [NgxDocViewerModule, PdfViewerComponent, SafePipe],
   templateUrl: './file-viewer.component.html',
   styleUrl: './file-viewer.component.scss',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FileViewerComponent implements OnInit {
-  filename?:string;
-  url: string|null = null;
-  viewerUrl: string|null = null;
-  extension: string|null = null;
+  filename?: string;
+  url: string | null = null;
+  viewerUrl: string | null = null;
+  extension: string | null = null;
   FileExtensionEnum = FileExtensionEnum;
-  loading:boolean = true;
+  loading: boolean = true;
   isOnMobile: boolean = isMobile();
 
   ngOnInit(): void {
@@ -29,11 +29,11 @@ export class FileViewerComponent implements OnInit {
 
   @HostListener('window:message', ['$event'])
   onMessage(event: MessageEvent) {
-   if (!environment.fileViewerOrigins.includes(event.origin)) return;
+    if (!environment.fileViewerOrigins.includes(event.origin)) return;
 
     const request = event.data as MessageEventRequest;
     if (isEmpty(request.payload['extension']) || isEmpty(request.payload['url'])) {
-      console.error("Extension or url is not found");
+      console.error('Extension or url is not found');
       return;
     }
 
@@ -50,7 +50,7 @@ export class FileViewerComponent implements OnInit {
    */
   fetchPDF(url: string) {
     fetch(url)
-    .then(response => response.blob())
-    .then(blob => this.url = URL.createObjectURL(blob))
+      .then((response) => response.blob())
+      .then((blob) => (this.url = URL.createObjectURL(blob)));
   }
 }

@@ -1,13 +1,13 @@
 export interface VideoPayload {
-    url: string;
-    type: string;
+  url: string;
+  type: string;
 }
 
 export enum VideoTypeEnum {
-    INTEGRATION = 'integration',
-    MP4 = 'mp4',
-    DOUYIN = 'douyin',
-    TIKTOK = 'tiktok',
-    INSTAGRAM = 'instagram',
-    YOUTUBE_SHORT = 'youtub_short'
+  INTEGRATION = 'integration',
+  MP4 = 'mp4',
+  DOUYIN = 'douyin',
+  TIKTOK = 'tiktok',
+  INSTAGRAM = 'instagram',
+  YOUTUBE_SHORT = 'youtub_short',
 }

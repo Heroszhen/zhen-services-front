@@ -4,7 +4,7 @@ export interface MessageEventRequest {
     url: string;
     filename?: string;
     extension: string;
-  }
+  };
 }
 
 export enum FileExtensionEnum {
@@ -13,5 +13,5 @@ export enum FileExtensionEnum {
   MP3 = 'mp3',
   IMAGE = 'image',
   TXT = 'txt',
-  CSV = 'csv'
+  CSV = 'csv',
 }

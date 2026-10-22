@@ -18,11 +18,11 @@ declare global {
   standalone: true,
   imports: [SafePipe],
   templateUrl: './video-player.component.html',
-  styleUrl: './video-player.component.scss'
+  styleUrl: './video-player.component.scss',
 })
 export class VideoPlayerComponent implements OnInit {
-  videoUrl: string|null = null;
-  videoType: VideoTypeEnum|null = null;
+  videoUrl: string | null = null;
+  videoType: VideoTypeEnum | null = null;
   VideoTypeEnum = VideoTypeEnum;
 
   ngOnInit(): void {
@@ -31,38 +31,38 @@ export class VideoPlayerComponent implements OnInit {
 
   @HostListener('window:message', ['$event'])
   onMessage(event: MessageEvent) {
-   if (!environment.fileViewerOrigins.includes(event.origin)) return;
+    if (!environment.fileViewerOrigins.includes(event.origin)) return;
 
-   const payload: VideoPayload = event.data.payload;
+    const payload: VideoPayload = event.data.payload;
 
-   this.videoType = Object.values(VideoTypeEnum).includes(payload.type.toLocaleLowerCase() as VideoTypeEnum)
-    ? payload.type.toLocaleLowerCase() as VideoTypeEnum
-    : null;
+    this.videoType = Object.values(VideoTypeEnum).includes(payload.type.toLocaleLowerCase() as VideoTypeEnum)
+      ? (payload.type.toLocaleLowerCase() as VideoTypeEnum)
+      : null;
 
     if (this.videoType === null || !payload.url) return;
 
     this.videoUrl = payload.url;
 
-    const tab:string[] = this.videoUrl.split('/'); 
-    switch(this.videoType) { 
-      case VideoTypeEnum.YOUTUBE_SHORT: { 
-         this.videoUrl = "https://youtube.com/embed/" + tab[tab.length - 1];
-         break; 
-      } 
-      case VideoTypeEnum.DOUYIN: { 
-        this.videoUrl = `https://open.douyin.com/player/video?vid=${tab[tab.length - 1]}&autoplay=1`;
-        break; 
+    const tab: string[] = this.videoUrl.split('/');
+    switch (this.videoType) {
+      case VideoTypeEnum.YOUTUBE_SHORT: {
+        this.videoUrl = 'https://youtube.com/embed/' + tab[tab.length - 1];
+        break;
       }
-      case VideoTypeEnum.TIKTOK: { 
+      case VideoTypeEnum.DOUYIN: {
+        this.videoUrl = `https://open.douyin.com/player/video?vid=${tab[tab.length - 1]}&autoplay=1`;
+        break;
+      }
+      case VideoTypeEnum.TIKTOK: {
         this.videoUrl = `https://www.tiktok.com/player/v1/${tab[tab.length - 1]}`;
-        break; 
-      } 
-      case VideoTypeEnum.INSTAGRAM: { 
+        break;
+      }
+      case VideoTypeEnum.INSTAGRAM: {
         setTimeout(() => window.instgrm?.Embeds.process());
-        break; 
-      } 
-   }
+        break;
+      }
+    }
 
-   if (this.videoType === null || !this.videoUrl) return;
+    if (this.videoType === null || !this.videoUrl) return;
   }
 }
