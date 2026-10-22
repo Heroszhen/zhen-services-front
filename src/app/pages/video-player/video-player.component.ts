@@ -3,6 +3,16 @@ import { environment } from '../../../environments/environment';
 import { VideoPayload, VideoTypeEnum } from '../../models/VideoPlayer';
 import { SafePipe } from '../../pipes/safe.pipe';
 
+declare global {
+  interface Window {
+    instgrm?: {
+      Embeds: {
+        process(): void;
+      };
+    };
+  }
+}
+
 @Component({
   selector: 'app-video-player',
   standalone: true,
@@ -48,7 +58,7 @@ export class VideoPlayerComponent implements OnInit {
         break; 
       } 
       case VideoTypeEnum.INSTAGRAM: { 
-        setTimeout(() => (window as any).instgrm?.Embeds.process());
+        setTimeout(() => window.instgrm?.Embeds.process());
         break; 
       } 
    }

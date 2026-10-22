@@ -14,7 +14,7 @@ export class PdfViewerComponent implements AfterViewInit {
   async ngAfterViewInit() {
     const { default: EmbedPDF } = await import('@embedpdf/snippet');
 
-    const instance = EmbedPDF.init({
+    EmbedPDF.init({
       type: 'container',
       target: this.container.nativeElement,
       src: this.fileUrl,

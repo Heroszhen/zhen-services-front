@@ -44,3 +44,5 @@ Thumbs.db
 
 /src/app/style/*
 src/environments/environment.ts
+.nx/cache
+.nx/workspace-data
