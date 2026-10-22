@@ -44,3 +44,4 @@ Thumbs.db
 
 /src/app/style/*
 src/environments/environment.development.ts
+/src/assets/env.local.json
