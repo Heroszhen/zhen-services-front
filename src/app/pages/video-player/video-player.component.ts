@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { VideoPayload, VideoTypeEnum } from '../../models/VideoPlayer';
 import { SafePipe } from '../../pipes/safe.pipe';
@@ -20,18 +20,35 @@ declare global {
   templateUrl: './video-player.component.html',
   styleUrl: './video-player.component.scss',
 })
-export class VideoPlayerComponent implements OnInit {
+export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   videoUrl: string | null = null;
   videoType: VideoTypeEnum | null = null;
   VideoTypeEnum = VideoTypeEnum;
+  @ViewChild('container') container!: ElementRef<HTMLElement>;
+  private resizeObserver?: ResizeObserver;
+  private parentOrigin: string | null = null;
 
   ngOnInit(): void {
     console.log("Merci d'utiliser Zhen Service - video player");
   }
 
+  ngAfterViewInit(): void {
+    this.resizeObserver = new ResizeObserver(() => {
+      if (this.parentOrigin) {
+        window.parent.postMessage(
+          { type: 'RESIZE', payload: { videoHeight: this.container.nativeElement.clientHeight } },
+          this.parentOrigin
+        );
+      }
+    });
+    this.resizeObserver.observe(this.container.nativeElement);
+  }
+
   @HostListener('window:message', ['$event'])
   onMessage(event: MessageEvent) {
     if (!environment.fileViewerOrigins.includes(event.origin)) return;
+
+    this.parentOrigin = event.origin;
 
     const payload: VideoPayload = event.data.payload;
 
@@ -64,5 +81,9 @@ export class VideoPlayerComponent implements OnInit {
     }
 
     if (this.videoType === null || !this.videoUrl) return;
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
   }
 }
