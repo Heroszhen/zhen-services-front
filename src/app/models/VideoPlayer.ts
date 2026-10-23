@@ -9,5 +9,5 @@ export enum VideoTypeEnum {
   DOUYIN = 'douyin',
   TIKTOK = 'tiktok',
   INSTAGRAM = 'instagram',
-  YOUTUBE_SHORT = 'youtub_short',
+  YOUTUBE_SHORT = 'youtube_short',
 }

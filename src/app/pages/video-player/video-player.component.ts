@@ -61,17 +61,18 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.videoUrl = payload.url;
 
     const tab: string[] = this.videoUrl.split('/');
+    const videoId: string = tab[tab.length - 1] === '' ? tab[tab.length - 2] : tab[tab.length - 1]
     switch (this.videoType) {
       case VideoTypeEnum.YOUTUBE_SHORT: {
-        this.videoUrl = 'https://youtube.com/embed/' + tab[tab.length - 1];
+        this.videoUrl = 'https://youtube.com/embed/' + videoId;
         break;
       }
       case VideoTypeEnum.DOUYIN: {
-        this.videoUrl = `https://open.douyin.com/player/video?vid=${tab[tab.length - 1]}&autoplay=1`;
+        this.videoUrl = `https://open.douyin.com/player/video?vid=${videoId}&autoplay=1`;
         break;
       }
       case VideoTypeEnum.TIKTOK: {
-        this.videoUrl = `https://www.tiktok.com/player/v1/${tab[tab.length - 1]}`;
+        this.videoUrl = `https://www.tiktok.com/player/v1/${videoId}`;
         break;
       }
       case VideoTypeEnum.INSTAGRAM: {
