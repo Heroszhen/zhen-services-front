@@ -61,7 +61,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.videoUrl = payload.url;
 
     const tab: string[] = this.videoUrl.split('/');
-    const videoId: string = tab[tab.length - 1] === '' ? tab[tab.length - 2] : tab[tab.length - 1]
+    const videoId: string = tab[tab.length - 1] === '' ? tab[tab.length - 2] : tab[tab.length - 1];
     switch (this.videoType) {
       case VideoTypeEnum.YOUTUBE_SHORT: {
         this.videoUrl = 'https://youtube.com/embed/' + videoId;

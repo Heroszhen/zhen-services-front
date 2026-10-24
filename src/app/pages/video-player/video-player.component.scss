@@ -11,9 +11,10 @@ video {
 #wrap-youtube-short {
   text-align: center;
   iframe {
-    width: 455px;
+    width: 454px;
     max-width: 95%;
-    aspect-ratio: 455 / 809;
+    aspect-ratio: 454 / 807;
+    border-radius: 10px;
   }
 }
 
