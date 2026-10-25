@@ -29,13 +29,20 @@
             allowFullScreen
             title=""
             id="iframe-open-tiktok"
-            class="w-[490px] max-w-[95%] aspect-[490/871] rounded-[20px]"></iframe>
+            width="{{videoWidth}}" 
+            height="{{videoHeight}}"
+            class="rounded-[20px]"></iframe>
         </div>
       }
 
       @case (VideoTypeEnum.YOUTUBE_SHORT) {
-        <div id="wrap-youtube-short" class="text">
-          <iframe [src]="videoUrl | safe: 'resourceUrl'" width="{{videoWidth}}" height="{{videoHeight}}"></iframe>
+        <div id="wrap-youtube-short" class="text-center">
+          <iframe 
+           [src]="videoUrl | safe: 'resourceUrl'" 
+           width="{{videoWidth}}" 
+           height="{{videoHeight}}"
+           allowFullScreen
+          ></iframe>
         </div>
       }
 

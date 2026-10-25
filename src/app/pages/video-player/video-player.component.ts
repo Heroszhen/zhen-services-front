@@ -67,8 +67,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     switch (this.videoType) {
       case VideoTypeEnum.YOUTUBE_SHORT: {
         this.videoUrl = 'https://youtube.com/embed/' + videoId;
-        this.videoHeight = Math.round(payload.height * 0.9);
-        this.videoWidth = Math.round(this.videoHeight * 9 / 16);
+        this.setVideoDimensions(payload.height);
         break;
       }
       case VideoTypeEnum.DOUYIN: {
@@ -77,6 +76,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       case VideoTypeEnum.TIKTOK: {
         this.videoUrl = `https://www.tiktok.com/player/v1/${videoId}`;
+        this.setVideoDimensions(payload.height, 0.95);
         break;
       }
       case VideoTypeEnum.INSTAGRAM: {
@@ -90,5 +90,10 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.resizeObserver?.disconnect();
+  }
+
+  setVideoDimensions(parentHeight: number, heightPercentage: number = 0.9, aspectRatio:number = 9 / 16) {
+    this.videoHeight = Math.round(parentHeight * 0.9);
+    this.videoWidth = Math.round(this.videoHeight * aspectRatio);
   }
 }
