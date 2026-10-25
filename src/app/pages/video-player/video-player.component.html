@@ -49,6 +49,21 @@
       @case (VideoTypeEnum.INSTAGRAM) {
         <div id="wrap-instagram" [innerHTML]="videoUrl | safe: 'html'"></div>
       }
+
+      @case (VideoTypeEnum.DAILYMOTION) {
+        <div id="wrap-youtube-dailymotion">
+          <iframe
+            frameborder="0"
+            type="text/html"
+            [src]="videoUrl | safe: 'resourceUrl'" 
+            width="100%"
+            class="aspect-video"
+            allowfullscreen
+            allow="autoplay; web-share"
+          >
+          </iframe>
+        </div>
+      }
     }
   }
 </section>

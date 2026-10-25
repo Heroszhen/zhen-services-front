@@ -76,11 +76,15 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       case VideoTypeEnum.TIKTOK: {
         this.videoUrl = `https://www.tiktok.com/player/v1/${videoId}`;
-        this.setVideoDimensions(payload.height, 0.95);
+        this.setVideoDimensions(payload.height);
         break;
       }
       case VideoTypeEnum.INSTAGRAM: {
         setTimeout(() => window.instgrm?.Embeds.process());
+        break;
+      }
+      case VideoTypeEnum.DAILYMOTION: {
+        this.videoUrl = `https://geo.dailymotion.com/player/x8lr5.html?video=${videoId}&amp`;
         break;
       }
     }
@@ -92,8 +96,8 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resizeObserver?.disconnect();
   }
 
-  setVideoDimensions(parentHeight: number, heightPercentage: number = 0.9, aspectRatio:number = 9 / 16) {
-    this.videoHeight = Math.round(parentHeight * 0.9);
+  setVideoDimensions(parentHeight: number, heightPercentage: number = 0.95, aspectRatio:number = 9 / 16) {
+    this.videoHeight = Math.round(parentHeight * heightPercentage);
     this.videoWidth = Math.round(this.videoHeight * aspectRatio);
   }
 }

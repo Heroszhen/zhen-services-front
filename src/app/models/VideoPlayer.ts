@@ -11,4 +11,5 @@ export enum VideoTypeEnum {
   TIKTOK = 'tiktok',
   INSTAGRAM = 'instagram',
   YOUTUBE_SHORT = 'youtube_short',
+  DAILYMOTION = 'dailymotion',
 }
