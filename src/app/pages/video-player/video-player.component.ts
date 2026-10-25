@@ -24,7 +24,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   videoUrl: string | null = null;
   videoType: VideoTypeEnum | null = null;
   VideoTypeEnum = VideoTypeEnum;
-  videoWidth:number = 0;
+  videoWidth: number = 0;
   videoHeight: number = 0;
   @ViewChild('container') container!: ElementRef<HTMLElement>;
   private resizeObserver?: ResizeObserver;
@@ -80,6 +80,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       }
       case VideoTypeEnum.INSTAGRAM: {
+        this.videoUrl = `https://www.instagram.com/reel/${videoId}/?utm_source=ig_embed&amp;utm_campaign=loading`;
         setTimeout(() => window.instgrm?.Embeds.process());
         break;
       }
@@ -96,7 +97,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resizeObserver?.disconnect();
   }
 
-  setVideoDimensions(parentHeight: number, heightPercentage: number = 0.95, aspectRatio:number = 9 / 16) {
+  setVideoDimensions(parentHeight: number, heightPercentage: number = 0.95, aspectRatio: number = 9 / 16) {
     this.videoHeight = Math.round(parentHeight * heightPercentage);
     this.videoWidth = Math.round(this.videoHeight * aspectRatio);
   }

@@ -29,25 +29,46 @@
             allowFullScreen
             title=""
             id="iframe-open-tiktok"
-            width="{{videoWidth}}" 
-            height="{{videoHeight}}"
+            width="{{ videoWidth }}"
+            height="{{ videoHeight }}"
             class="rounded-[20px]"></iframe>
         </div>
       }
 
       @case (VideoTypeEnum.YOUTUBE_SHORT) {
         <div id="wrap-youtube-short" class="text-center">
-          <iframe 
-           [src]="videoUrl | safe: 'resourceUrl'" 
-           width="{{videoWidth}}" 
-           height="{{videoHeight}}"
-           allowFullScreen
-          ></iframe>
+          <iframe
+            [src]="videoUrl | safe: 'resourceUrl'"
+            width="{{ videoWidth }}"
+            height="{{ videoHeight }}"
+            allowFullScreen></iframe>
         </div>
       }
 
       @case (VideoTypeEnum.INSTAGRAM) {
-        <div id="wrap-instagram" [innerHTML]="videoUrl | safe: 'html'"></div>
+        <!-- <div id="wrap-instagram" [innerHTML]="videoUrl | safe: 'html'"></div> -->
+        <div id="wrap-instagram">
+          <blockquote
+            class="instagram-media"
+            data-instgrm-captioned
+            [attr.data-instgrm-permalink]="videoUrl"
+            data-instgrm-version="14"
+            style="
+              background: #fff;
+              border: 0;
+              border-radius: 3px;
+              box-shadow:
+                0 0 1px 0 rgba(0, 0, 0, 0.5),
+                0 1px 10px 0 rgba(0, 0, 0, 0.15);
+              margin: 1px;
+              max-width: 540px;
+              min-width: 326px;
+              padding: 0;
+              width: 99.375%;
+              width: -webkit-calc(100% - 2px);
+              width: calc(100% - 2px);
+            "></blockquote>
+        </div>
       }
 
       @case (VideoTypeEnum.DAILYMOTION) {
@@ -55,12 +76,11 @@
           <iframe
             frameborder="0"
             type="text/html"
-            [src]="videoUrl | safe: 'resourceUrl'" 
+            [src]="videoUrl | safe: 'resourceUrl'"
             width="100%"
             class="aspect-video"
             allowfullscreen
-            allow="autoplay; web-share"
-          >
+            allow="autoplay; web-share">
           </iframe>
         </div>
       }
