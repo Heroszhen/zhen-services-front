@@ -24,6 +24,8 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   videoUrl: string | null = null;
   videoType: VideoTypeEnum | null = null;
   VideoTypeEnum = VideoTypeEnum;
+  videoWidth:number = 0;
+  videoHeight: number = 0;
   @ViewChild('container') container!: ElementRef<HTMLElement>;
   private resizeObserver?: ResizeObserver;
   private parentOrigin: string | null = null;
@@ -65,6 +67,8 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     switch (this.videoType) {
       case VideoTypeEnum.YOUTUBE_SHORT: {
         this.videoUrl = 'https://youtube.com/embed/' + videoId;
+        this.videoHeight = Math.round(payload.height * 0.9);
+        this.videoWidth = Math.round(this.videoHeight * 9 / 16);
         break;
       }
       case VideoTypeEnum.DOUYIN: {

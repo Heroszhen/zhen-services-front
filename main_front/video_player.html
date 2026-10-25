@@ -57,7 +57,7 @@
 
 		function loadIframe(url, type) {
 			iframe.contentWindow.postMessage(
-				{ type: 'READY', payload: { url: url, type: type } },
+				{ type: 'READY', payload: { url: url, type: type, height: Math.round(window.innerHeight) } },
 				'http://localhost:4200' // origine de l’appli Angular dans l’iframe
 			);
 		}

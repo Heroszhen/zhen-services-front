@@ -35,7 +35,7 @@
 
       @case (VideoTypeEnum.YOUTUBE_SHORT) {
         <div id="wrap-youtube-short" class="text">
-          <iframe [src]="videoUrl | safe: 'resourceUrl'"></iframe>
+          <iframe [src]="videoUrl | safe: 'resourceUrl'" width="{{videoWidth}}" height="{{videoHeight}}"></iframe>
         </div>
       }
 
