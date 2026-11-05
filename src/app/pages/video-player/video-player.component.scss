@@ -1,8 +1,7 @@
 :host ::ng-deep #wrap-integration iframe,
 :host ::ng-deep #wrap-integration video,
 video,
-#wrap-dailymotion iframe
-{
+#wrap-dailymotion iframe {
   width: 70%;
   height: auto;
   aspect-ratio: 16 / 9;
@@ -46,5 +45,3 @@ video,
     aspect-ratio: 402 / 476 !important;
   }
 }
-
-

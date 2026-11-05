@@ -35,14 +35,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.resizeObserver = new ResizeObserver(() => {
-      if (this.parentOrigin) {
-        window.parent.postMessage(
-          { type: 'RESIZE', payload: { videoHeight: this.container.nativeElement.clientHeight } },
-          this.parentOrigin
-        );
-      }
-    });
+    this.resizeObserver = new ResizeObserver(() => this.sendHeightToParent());
     this.resizeObserver.observe(this.container.nativeElement);
   }
 
@@ -65,6 +58,13 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     const tab: string[] = this.videoUrl.split('/');
     const videoId: string = tab[tab.length - 1] === '' ? tab[tab.length - 2] : tab[tab.length - 1];
     switch (this.videoType) {
+      case VideoTypeEnum.MP4: {
+        if (payload.file instanceof File) {
+          this.videoUrl = URL.createObjectURL(payload.file);
+          setTimeout(() => this.sendHeightToParent());
+        }
+        break;
+      }
       case VideoTypeEnum.YOUTUBE_SHORT: {
         this.videoUrl = 'https://youtube.com/embed/' + videoId;
         this.setVideoDimensions(payload.height);
@@ -100,5 +100,14 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   setVideoDimensions(parentHeight: number, heightPercentage: number = 0.95, aspectRatio: number = 9 / 16) {
     this.videoHeight = Math.round(parentHeight * heightPercentage);
     this.videoWidth = Math.round(this.videoHeight * aspectRatio);
+  }
+
+  private sendHeightToParent(): void {
+    if (this.parentOrigin) {
+      window.parent.postMessage(
+        { type: 'RESIZE', payload: { videoHeight: this.container.nativeElement.clientHeight } },
+        this.parentOrigin
+      );
+    }
   }
 }

@@ -2,6 +2,7 @@ export interface VideoPayload {
   url: string;
   type: string;
   height: number;
+  file: File | undefined;
 }
 
 export enum VideoTypeEnum {
