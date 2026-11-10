@@ -84,6 +84,20 @@
           </iframe>
         </div>
       }
+
+      @case (VideoTypeEnum.REDDIT) {
+        <div id="wrap-reddit">
+          <iframe
+            frameborder="0"
+            type="text/html"
+            [src]="videoUrl | safe: 'resourceUrl'"
+            width="100%"
+            scrolling="no"
+            allowfullscreen
+            allow="autoplay; web-share">
+          </iframe>
+        </div>
+      }
     }
   }
 </section>

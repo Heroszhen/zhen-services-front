@@ -88,6 +88,10 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
         this.videoUrl = `https://geo.dailymotion.com/player/x8lr5.html?video=${videoId}&amp`;
         break;
       }
+      case VideoTypeEnum.REDDIT: {
+        this.videoUrl = `${payload.url.replace('www', 'embed')}?embed=true`;
+        break;
+      }
     }
 
     if (this.videoType === null || !this.videoUrl) return;
