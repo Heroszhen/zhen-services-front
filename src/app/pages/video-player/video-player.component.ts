@@ -10,6 +10,11 @@ declare global {
         process(): void;
       };
     };
+    twttr?: {
+      widgets: {
+        load(element?: HTMLElement | null): Promise<void>;
+      };
+    };
   }
 }
 
@@ -90,6 +95,12 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       case VideoTypeEnum.REDDIT: {
         this.videoUrl = `${payload.url.replace('www', 'embed')}?embed=true`;
+        break;
+      }
+      case VideoTypeEnum.TWITTER: {
+        setTimeout(() => {
+          window.twttr?.widgets?.load(document.getElementById('wrap-twitter'));
+        });
         break;
       }
     }

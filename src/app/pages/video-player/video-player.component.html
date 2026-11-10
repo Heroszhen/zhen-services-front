@@ -98,6 +98,14 @@
           </iframe>
         </div>
       }
+
+      @case (VideoTypeEnum.TWITTER) {
+        <div id="wrap-twitter" class="flex justify-center pl-1 pr-1">
+          <blockquote class="twitter-tweet">
+            <a [href]="videoUrl | safe: 'resourceUrl'">instagram</a>
+          </blockquote>
+        </div>
+      }
     }
   }
 </section>
