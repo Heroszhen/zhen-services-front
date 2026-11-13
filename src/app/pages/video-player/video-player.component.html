@@ -41,6 +41,7 @@
             [src]="videoUrl | safe: 'resourceUrl'"
             width="{{ videoWidth }}"
             height="{{ videoHeight }}"
+            referrerpolicy="strict-origin-when-cross-origin"
             allowFullScreen></iframe>
         </div>
       }

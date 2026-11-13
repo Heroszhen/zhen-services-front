@@ -3,6 +3,7 @@ export interface VideoPayload {
   type: string;
   height: number;
   file: File | undefined;
+  maxWidth?: number;
 }
 
 export enum VideoTypeEnum {

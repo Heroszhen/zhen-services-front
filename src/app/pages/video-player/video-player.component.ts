@@ -59,7 +59,6 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.videoType === null || !payload.url) return;
 
     this.videoUrl = payload.url;
-
     const tab: string[] = this.videoUrl.split('/');
     const videoId: string = tab[tab.length - 1] === '' ? tab[tab.length - 2] : tab[tab.length - 1];
     switch (this.videoType) {
@@ -72,7 +71,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       case VideoTypeEnum.YOUTUBE_SHORT: {
         this.videoUrl = 'https://youtube.com/embed/' + videoId;
-        this.setVideoDimensions(payload.height);
+        this.setVideoDimensions(payload.height, payload.maxWidth);
         break;
       }
       case VideoTypeEnum.DOUYIN: {
@@ -81,7 +80,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       case VideoTypeEnum.TIKTOK: {
         this.videoUrl = `https://www.tiktok.com/player/v1/${videoId}`;
-        this.setVideoDimensions(payload.height);
+        this.setVideoDimensions(payload.height, payload.maxWidth);
         break;
       }
       case VideoTypeEnum.INSTAGRAM: {
@@ -112,9 +111,24 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resizeObserver?.disconnect();
   }
 
-  setVideoDimensions(parentHeight: number, heightPercentage: number = 0.95, aspectRatio: number = 9 / 16) {
+  setVideoDimensions(
+    parentHeight: number,
+    maxWidth?: number,
+    heightPercentage: number = 0.95,
+    aspectRatio: number = 9 / 16
+  ) {
     this.videoHeight = Math.round(parentHeight * heightPercentage);
-    this.videoWidth = Math.round(this.videoHeight * aspectRatio);
+    let width = Math.round(this.videoHeight * aspectRatio);
+
+    if (maxWidth) {
+      const reelMaxWidth = maxWidth - 4;
+      if (width > reelMaxWidth) {
+        width = reelMaxWidth;
+        this.videoHeight = Math.round(width / aspectRatio);
+      }
+    }
+
+    this.videoWidth = width;
   }
 
   private sendHeightToParent(): void {
