@@ -58,6 +58,10 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.videoType === null || !payload.url) return;
 
+    if (this.videoUrl?.startsWith('blob:')) {
+      URL.revokeObjectURL(this.videoUrl);
+    }
+
     this.videoUrl = payload.url;
     const tab: string[] = this.videoUrl.split('/');
     const videoId: string = tab[tab.length - 1] === '' ? tab[tab.length - 2] : tab[tab.length - 1];
@@ -102,9 +106,13 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
         });
         break;
       }
+      case VideoTypeEnum.FACEBOOK: {
+        this.videoUrl =
+          'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(payload.url) + '&show_text=false';
+        this.setVideoDimensions(payload.height, payload.maxWidth);
+        break;
+      }
     }
-
-    if (this.videoType === null || !this.videoUrl) return;
   }
 
   ngOnDestroy(): void {

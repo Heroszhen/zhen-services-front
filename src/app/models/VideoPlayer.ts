@@ -16,4 +16,5 @@ export enum VideoTypeEnum {
   DAILYMOTION = 'dailymotion',
   REDDIT = 'reddit',
   TWITTER = 'twitter',
+  FACEBOOK = 'facebook',
 }
