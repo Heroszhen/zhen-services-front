@@ -18,6 +18,11 @@ declare global {
   }
 }
 
+type RedditResizeMessage = {
+  type: 'resize.embed';
+  data: number;
+};
+
 @Component({
   selector: 'app-video-player',
   standalone: true,
@@ -46,6 +51,18 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('window:message', ['$event'])
   onMessage(event: MessageEvent) {
+    if (event.origin === 'https://embed.reddit.com') {
+      try {
+        if (typeof event.data === 'string') {
+          const data: RedditResizeMessage = JSON.parse(event.data);
+          this.videoHeight = data.data;
+        }
+      } catch (error) {
+        console.error('Message Reddit invalide :', event.data, error);
+      }
+      return;
+    }
+
     if (!environment.fileViewerOrigins.includes(event.origin)) return;
 
     this.parentOrigin = event.origin;

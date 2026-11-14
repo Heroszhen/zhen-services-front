@@ -87,12 +87,13 @@
       }
 
       @case (VideoTypeEnum.REDDIT) {
-        <div id="wrap-reddit">
+        <div id="wrap-reddit" class="text-center ps-1 pe-1">
           <iframe
             frameborder="0"
             type="text/html"
             [src]="videoUrl | safe: 'resourceUrl'"
             width="100%"
+            height="{{ videoHeight }}"
             scrolling="no"
             allowfullscreen
             allow="autoplay; web-share">
