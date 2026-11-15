@@ -4,6 +4,7 @@ export interface VideoPayload {
   height: number;
   file: File | undefined;
   maxWidth?: number;
+  needFullHeight?: boolean;
 }
 
 export enum VideoTypeEnum {

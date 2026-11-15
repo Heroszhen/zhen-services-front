@@ -6,7 +6,7 @@
       }
 
       @case (VideoTypeEnum.MP4) {
-        <video controls [src]="videoUrl"></video>
+        <video controls [src]="videoUrl" [style.height.px]="needFullHeight ? videoHeight : null"></video>
       }
 
       @case (VideoTypeEnum.DOUYIN) {

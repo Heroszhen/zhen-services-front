@@ -1,4 +1,15 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  afterNextRender,
+  inject,
+  Injector,
+} from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { VideoPayload, VideoTypeEnum } from '../../models/VideoPlayer';
 import { SafePipe } from '../../pipes/safe.pipe';
@@ -36,9 +47,11 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   VideoTypeEnum = VideoTypeEnum;
   videoWidth: number = 0;
   videoHeight: number = 0;
+  needFullHeight?: boolean;
   @ViewChild('container') container!: ElementRef<HTMLElement>;
   private resizeObserver?: ResizeObserver;
   private parentOrigin: string | null = null;
+  private injector = inject(Injector);
 
   ngOnInit(): void {
     console.log("Merci d'utiliser Zhen Service - video player");
@@ -75,6 +88,9 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.videoType === null || !payload.url) return;
 
+    this.videoHeight = payload.height;
+    this.needFullHeight = payload.needFullHeight;
+
     if (this.videoUrl?.startsWith('blob:')) {
       URL.revokeObjectURL(this.videoUrl);
     }
@@ -83,7 +99,17 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     const tab: string[] = this.videoUrl.split('/');
     const videoId: string = tab[tab.length - 1] === '' ? tab[tab.length - 2] : tab[tab.length - 1];
     switch (this.videoType) {
+      case VideoTypeEnum.INTEGRATION: {
+        if (payload.needFullHeight) {
+          this.setFullHeight('wrap-integration', payload.height);
+        }
+        break;
+      }
       case VideoTypeEnum.MP4: {
+        if (payload.needFullHeight) {
+          this.videoHeight = payload.height;
+        }
+
         if (payload.file instanceof File) {
           this.videoUrl = URL.createObjectURL(payload.file);
           setTimeout(() => this.sendHeightToParent());
@@ -111,6 +137,9 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       case VideoTypeEnum.DAILYMOTION: {
         this.videoUrl = `https://geo.dailymotion.com/player/x8lr5.html?video=${videoId}&amp`;
+        if (payload.needFullHeight) {
+          this.setFullHeight('wrap-dailymotion', payload.height);
+        }
         break;
       }
       case VideoTypeEnum.REDDIT: {
@@ -163,5 +192,18 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
         this.parentOrigin
       );
     }
+  }
+
+  private setFullHeight(wrapId: string, height: number): void {
+    afterNextRender(
+      () => {
+        const wrap = this.container.nativeElement.querySelector(`#${wrapId}`);
+        const video = wrap?.querySelector('iframe') ?? wrap?.querySelector('video');
+        if (video) {
+          video.style.setProperty('height', `${height}px`, 'important');
+        }
+      },
+      { injector: this.injector }
+    );
   }
 }
