@@ -80,6 +80,15 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.parentOrigin = event.origin;
 
+    if (event.data?.type === 'STOP') {
+      if (this.videoUrl?.startsWith('blob:')) {
+        URL.revokeObjectURL(this.videoUrl);
+      }
+      this.videoUrl = null;
+      this.videoType = null;
+      return;
+    }
+
     const payload: VideoPayload = event.data.payload;
 
     this.videoType = Object.values(VideoTypeEnum).includes(payload.type.toLocaleLowerCase() as VideoTypeEnum)
