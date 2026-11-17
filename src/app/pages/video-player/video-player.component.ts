@@ -26,6 +26,11 @@ declare global {
         load(element?: HTMLElement | null): Promise<void>;
       };
     };
+    FB?: {
+      XFBML: {
+        parse(element?: HTMLElement | null): void;
+      };
+    };
   }
 }
 
@@ -52,6 +57,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   private resizeObserver?: ResizeObserver;
   private parentOrigin: string | null = null;
   private injector = inject(Injector);
+  private videoPayload: VideoPayload | null = null;
 
   ngOnInit(): void {
     console.log("Merci d'utiliser Zhen Service - video player");
@@ -97,6 +103,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.videoType === null || !payload.url) return;
 
+    this.videoPayload = payload;
     this.videoHeight = payload.height;
     this.needFullHeight = payload.needFullHeight;
 
@@ -162,9 +169,11 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       }
       case VideoTypeEnum.FACEBOOK: {
-        this.videoUrl =
-          'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(payload.url) + '&show_text=false';
-        this.setVideoDimensions(payload.height, payload.maxWidth);
+        this.videoWidth = payload.maxWidth ?? 360;
+        afterNextRender(() => this.renderFacebook(this.videoWidth), { injector: this.injector });
+        // this.videoUrl =
+        //   'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(payload.url) + '&show_text=false';
+        // this.setVideoDimensions(payload.height, payload.maxWidth);
         break;
       }
     }
@@ -194,13 +203,76 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.videoWidth = width;
   }
 
-  private sendHeightToParent(): void {
-    if (this.parentOrigin) {
-      window.parent.postMessage(
-        { type: 'RESIZE', payload: { videoHeight: this.container.nativeElement.clientHeight } },
-        this.parentOrigin
-      );
+  private renderFacebook(width: number): void {
+    const wrap = this.container.nativeElement.querySelector('#wrap-facebook') as HTMLElement | null;
+    if (!wrap) return;
+
+    wrap.innerHTML = '';
+    const div = document.createElement('div');
+    div.className = 'fb-video';
+    div.dataset['href'] = this.videoUrl ?? '';
+    div.dataset['width'] = String(width);
+    div.dataset['showText'] = 'false';
+    wrap.appendChild(div);
+
+    if (window.FB) {
+      window.FB.XFBML.parse(wrap);
+    } else {
+      this.loadFacebookSdk();
     }
+  }
+
+  private loadFacebookSdk(): void {
+    const script = document.createElement('script');
+    script.async = true;
+    script.defer = true;
+    script.crossOrigin = 'anonymous';
+    script.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v21.0';
+    document.body.appendChild(script);
+  }
+
+  private sendHeightToParent(): void {
+    if (!this.parentOrigin) return;
+
+    if (this.videoPayload?.height && this.videoPayload?.maxWidth) {
+      const iframe = this.container.nativeElement.querySelector('iframe');
+      const width = parseFloat(iframe?.style.width ?? '0');
+      const height = parseFloat(iframe?.style.height ?? '0');
+      if (this.videoType === VideoTypeEnum.FACEBOOK && (!width || !height)) return;
+
+      if (iframe && (width > this.videoPayload.maxWidth || height > this.videoPayload.height)) {
+        switch (this.videoType) {
+          case VideoTypeEnum.FACEBOOK: {
+            this.setVideoWidthByNewRatio(width / height, this.videoPayload.maxWidth, this.videoPayload.height);
+            this.renderFacebook(this.videoWidth);
+            return;
+          }
+        }
+      }
+    }
+
+    window.parent.postMessage(
+      { type: 'RESIZE', payload: { videoHeight: this.container.nativeElement.clientHeight } },
+      this.parentOrigin
+    );
+  }
+
+  /**
+   *
+   * @param ratio width/height
+   * @param width
+   * @param height
+   */
+  private setVideoWidthByNewRatio(ratio: number, width: number, height: number) {
+    let newHeight = height - 5;
+    let newWidth = width;
+
+    do {
+      --newHeight;
+      newWidth = Math.round(newHeight * ratio);
+    } while (newWidth > width);
+
+    this.videoWidth = newWidth;
   }
 
   private setFullHeight(wrapId: string, height: number): void {
