@@ -211,7 +211,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     const div = document.createElement('div');
     div.className = 'fb-video';
     div.dataset['href'] = this.videoUrl ?? '';
-    div.dataset['width'] = String(width);
+    div.dataset['width'] = String(Math.round(width));
     div.dataset['showText'] = 'false';
     wrap.appendChild(div);
 
