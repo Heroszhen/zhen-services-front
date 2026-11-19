@@ -66,6 +66,8 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.resizeObserver = new ResizeObserver(() => this.sendHeightToParent());
     this.resizeObserver.observe(this.container.nativeElement);
+
+    window.parent.postMessage({ type: 'PLAYER_LOADED' }, '*');
   }
 
   @HostListener('window:message', ['$event'])
