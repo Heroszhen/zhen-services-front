@@ -13,3 +13,7 @@ export function isMobile(): boolean {
 
   return false;
 }
+
+export function wait(second: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, second * 1000));
+}

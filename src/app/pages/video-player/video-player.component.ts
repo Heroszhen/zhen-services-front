@@ -172,10 +172,19 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       case VideoTypeEnum.FACEBOOK: {
         this.videoWidth = payload.maxWidth ?? 360;
-        afterNextRender(() => this.renderFacebook(this.videoWidth), { injector: this.injector });
-        // this.videoUrl =
-        //   'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(payload.url) + '&show_text=false';
-        // this.setVideoDimensions(payload.height, payload.maxWidth);
+        afterNextRender(
+          () => {
+            this.renderFacebook(this.videoWidth);
+
+            setTimeout(() => {
+              const curtan = this.container.nativeElement.querySelector('#facebook-curtan') as HTMLElement | null;
+              if (curtan) {
+                curtan.classList.add('hidden');
+              }
+            }, 3000);
+          },
+          { injector: this.injector }
+        );
         break;
       }
     }
@@ -206,7 +215,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private renderFacebook(width: number): void {
-    const wrap = this.container.nativeElement.querySelector('#wrap-facebook') as HTMLElement | null;
+    const wrap = this.container.nativeElement.querySelector('#wrap-facebook-video') as HTMLElement | null;
     if (!wrap) return;
 
     wrap.innerHTML = '';
@@ -266,13 +275,13 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param height
    */
   private setVideoWidthByNewRatio(ratio: number, width: number, height: number) {
-    let newHeight = height - 5;
+    let newHeight = height - 10;
     let newWidth = width;
 
     do {
       --newHeight;
       newWidth = Math.round(newHeight * ratio);
-    } while (newWidth > width);
+    } while (newWidth > width - 10);
 
     this.videoWidth = newWidth;
   }

@@ -110,18 +110,9 @@
       }
 
       @case (VideoTypeEnum.FACEBOOK) {
-        <div id="wrap-facebook" class="text-center">
-          <!-- <iframe
-            frameborder="0"
-            type="text/html"
-            [src]="videoUrl | safe: 'resourceUrl'"
-            width="{{ videoWidth }}"
-            height="{{ videoHeight }}"
-            scrolling="no"
-            allowfullscreen
-            allow="autoplay; web-share">
-          </iframe> -->
-          <div id="wrap-facebook" class="text-center"></div>
+        <div id="wrap-facebook" class="text-center relative">
+          <div id="wrap-facebook-video" class="text-center"></div>
+          <div id="facebook-curtan" class="fixed inset-0 w-full h-full bg-black z-[100]"></div>
         </div>
       }
     }
